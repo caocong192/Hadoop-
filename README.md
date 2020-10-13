@@ -13,7 +13,7 @@
   <value>file:///${hadoop.tmp.dir}/dfs/data1,file:///hd2/dfs/ data2,file:///hd3/dfs/data3,file:///hd4/dfs/data4</value>
 </property>`
 
-### 2. 项目经验之 磁盘间数据均衡
+### 2. 项目经验之 集群数据均衡
 #### 1. 增加磁盘后，保证集群每个机器间数据均衡 
 1. 开启数据均衡命令：
 `bin/start-balancer.sh –threshold 10 `
