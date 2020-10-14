@@ -13,6 +13,7 @@
   <value>file:///${hadoop.tmp.dir}/dfs/data1,file:///hd2/dfs/ data2,file:///hd3/dfs/data3,file:///hd4/dfs/data4</value>
 </property>`
 
+
 ### 2. 项目经验之 集群数据均衡
 #### 1. 增加磁盘后，保证集群每个机器间数据均衡 
 1. 开启数据均衡命令：
@@ -35,3 +36,18 @@
 4. 取消均衡计划
 `hdfs diskbalancer -cancel hadoop103.plan.json`
 
+
+### 3. 项目经验之 支持LZO压缩配置
+将编译好后的 hadoop-lzo-0.4.20.jar 放入 hadoop-2.7.2/share/hadoop/common/
+
+修改core-site.xml 增加配置支持 LZO 压缩
+```
+<property>
+  <name>io.compression.codecs</name>
+  <value> org.apache.hadoop.io.compress.GzipCodec, org.apache.hadoop.io.compress.DefaultCodec, org.apache.hadoop.io.compress.BZip2Codec, org.apache.hadoop.io.compress.SnappyCodec, com.hadoop.compression.lzo.LzoCodec, com.hadoop.compression.lzo.LzopCodec </value>
+</property>
+```
+
+
+### 4. 项目经验之 LZO 创建索引
+1. 上传文件
