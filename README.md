@@ -8,10 +8,12 @@
   1. 在 DataNode 节点增加磁盘并进行挂载。 
 
   2. 在 hdfs-site.xml 文件中配置多目录，注意新挂载磁盘的访问权限问题。 
-`<property>
+```
+<property>
   <name>dfs.datanode.data.dir</name>
   <value>file:///${hadoop.tmp.dir}/dfs/data1,file:///hd2/dfs/ data2,file:///hd3/dfs/data3,file:///hd4/dfs/data4</value>
-</property>`
+</property>
+```
 
 
 ### 2. 项目经验之 集群数据均衡
@@ -38,7 +40,7 @@
 
 
 ### 3. 项目经验之 支持LZO压缩配置
-将编译好后的 hadoop-lzo-0.4.20.jar 放入 hadoop-2.7.2/share/hadoop/common/
+将编译好后的 hadoop-lzo-0.4.20.jar 放入 hadoop-3.1.2/share/hadoop/common/
 
 修改core-site.xml 增加配置支持 LZO 压缩
 ```
