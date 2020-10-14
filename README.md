@@ -107,16 +107,32 @@ hdfs diskbalancer -cancel hadoop103.plan.json
 ```
 2. 测试 HDFS 读性能
 测试内容：读取 HDFS 集群 3(CPU-1) 个 128M 的文件
-```
-hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.1.3-tests.jar TestDFSIO -read -nrFiles 3 -fileSize 128MB
-```
-```
-2020-10-14 20:32:48,460 INFO fs.TestDFSIO: ----- TestDFSIO ----- : read
-2020-10-14 20:32:48,461 INFO fs.TestDFSIO:             Date & time: Wed Oct 14 20:32:48 CST 2020
-2020-10-14 20:32:48,463 INFO fs.TestDFSIO:         Number of files: 3
-2020-10-14 20:32:48,463 INFO fs.TestDFSIO:  Total MBytes processed: 384
-2020-10-14 20:32:48,463 INFO fs.TestDFSIO:       Throughput mb/sec: 226.55
-2020-10-14 20:32:48,463 INFO fs.TestDFSIO:  Average IO rate mb/sec: 241.69
-2020-10-14 20:32:48,463 INFO fs.TestDFSIO:   IO rate std deviation: 62.22
-2020-10-14 20:32:48,463 INFO fs.TestDFSIO:      Test exec time sec: 41.12
-```
+  ```
+  hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.1.3-tests.jar TestDFSIO -read -nrFiles 3 -fileSize 128MB
+  ```
+  ```
+  2020-10-14 20:32:48,460 INFO fs.TestDFSIO: ----- TestDFSIO ----- : read
+  2020-10-14 20:32:48,461 INFO fs.TestDFSIO:             Date & time: Wed Oct 14 20:32:48 CST 2020
+  2020-10-14 20:32:48,463 INFO fs.TestDFSIO:         Number of files: 3
+  2020-10-14 20:32:48,463 INFO fs.TestDFSIO:  Total MBytes processed: 384
+  2020-10-14 20:32:48,463 INFO fs.TestDFSIO:       Throughput mb/sec: 226.55
+  2020-10-14 20:32:48,463 INFO fs.TestDFSIO:  Average IO rate mb/sec: 241.69
+  2020-10-14 20:32:48,463 INFO fs.TestDFSIO:   IO rate std deviation: 62.22
+  2020-10-14 20:32:48,463 INFO fs.TestDFSIO:      Test exec time sec: 41.12
+  ```
+
+3. 使用 Sort 程序评测 MapReduce
+  1. 使用 RandomWriter 来产生随机数，每个节点运行 10 个 Map 任务，每个 Map 产 生大约 1G 大小的二进制随机数
+  ```
+  hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar randomwriter random-data
+  ```
+
+  2. 执行 Sort 程序
+  ```
+  hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar sort random-data sorted-data
+  ```
+  
+  3. 验证数据是否真正排好序了
+  ```
+  hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.1.3-tests.jar testmapredsort -sortInput random-data -sortOutput sorted-data
+  ```
