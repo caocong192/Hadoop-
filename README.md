@@ -89,4 +89,8 @@ hdfs diskbalancer -cancel hadoop103.plan.json
 
 ### 4. 项目经验之 基准测试
 
-
+1. 测试 HDFS 写性能
+测试内容：向 HDFS 集群写 3(CPU-1) 个 128M 的文件
+  ```
+  hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-client-j obclient-3.1.3-tests.jar TestDFSIO -write -nrFiles 3 -fileSize 128MB
+  ```
