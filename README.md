@@ -72,15 +72,17 @@ hdfs diskbalancer -cancel hadoop103.plan.json
     ```
    2. 执行 wordcount 程序
     ```
-    hadoop jar /opt/module/hadoop-3.1.2/share/hadoop/mapreduce/hadoop-mapredu ce-examples-2.7.2.jar wordcount /input /output
+    hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar wordcount -Dmapreduce.job.inputformat.class=com.hadoop.mapreduce.LzoTextInputFormat /input /output1
     ```
+    
+    
    3. 对上传的 LZO 文件建索引
     ```
-    hadoop jar /opt/module/hadoop-3.1.2/share/hadoop/common/hadoop-lzo-0.4.20. jar com.hadoop.compression.lzo.DistributedLzoIndexer /input/bigtable.lzo
+    hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/common/hadoop-lzo-0.4.20. jar com.hadoop.compression.lzo.DistributedLzoIndexer /input/bigtable.lzo
     ```
    4. 再次执行 WordCount 程序
     ```
-    hadoop jar /opt/module/hadoop-3.1.2/share/hadoop/mapreduce/hadoop-mapredu ce-examples-2.7.2.jar wordcount /input /output
+    hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar wordcount -Dmapreduce.job.inputformat.class=com.hadoop.mapreduce.LzoTextInputFormat /input /output2
     ```
 
 
