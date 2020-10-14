@@ -84,6 +84,7 @@ hdfs diskbalancer -cancel hadoop103.plan.json
     ```
     hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar wordcount -Dmapreduce.job.inputformat.class=com.hadoop.mapreduce.LzoTextInputFormat /input /output2
     ```
+    ![lzo_split_2](https://github.com/caocong192/Hadoop-/blob/main/pics/lzo_split_2.jpg)
 
 
 ### 4. 项目经验之 基准测试
