@@ -19,24 +19,36 @@
 ### 2. 项目经验之 集群数据均衡
 #### 1. 增加磁盘后，保证集群每个机器间数据均衡 
 1. 开启数据均衡命令：
-`bin/start-balancer.sh –threshold 10 `
+```
+bin/start-balancer.sh –threshold 10 
+```
 对于参数 10，代表的是集群中各个节点的磁盘空间利用率相差不超过 10%，可根据实际情况进行调整。 
 
 2. 停止数据均衡命令：
-`bin/stop-balancer.sh`
+```
+bin/stop-balancer.sh
+```
  
 #### 2. 集群机器每个磁盘间数据均衡
 1. 生成均衡计划
-`hdfs diskbalancer -plan hadoop103`
+```
+hdfs diskbalancer -plan hadoop103
+````
 
 2. 执行均衡计划
-`hdfs diskbalancer -execute hadoop103.plan.json`
+```
+hdfs diskbalancer -execute hadoop103.plan.json
+```
 
 3. 查看当前均衡计划的执行情况
-`hdfs diskbalancer -query hadoop103`
+```
+hdfs diskbalancer -query hadoop103
+```
 
 4. 取消均衡计划
-`hdfs diskbalancer -cancel hadoop103.plan.json`
+```
+hdfs diskbalancer -cancel hadoop103.plan.json
+```
 
 
 ### 3. 项目经验之 支持LZO压缩配置
@@ -55,15 +67,23 @@
 1. 创建 LZO 文件的索引，LZO 压缩文件的可切片特性依赖于其索引，故我们需要手动为 LZO 压缩文件创建索引。若无索引，则 LZO 文件的切片只有一个
 2. 测试
   1. 将 bigtable.lzo（150M）上传到集群的根目录
-  `hadoop fs -put bigtable.lzo /input`
+  ```
+  hadoop fs -put bigtable.lzo /input
+  ```
   2. 执行 wordcount 程序
-  `hadoop jar /opt/module/hadoop-3.1.2/share/hadoop/mapreduce/hadoop-mapredu ce-examples-2.7.2.jar wordcount /input /output`
+  ```
+  hadoop jar /opt/module/hadoop-3.1.2/share/hadoop/mapreduce/hadoop-mapredu ce-examples-2.7.2.jar wordcount /input /output
+  ```
   
   
   3. 对上传的 LZO 文件建索引
-  `hadoop jar /opt/module/hadoop-3.1.2/share/hadoop/common/hadoop-lzo-0.4.20. jar com.hadoop.compression.lzo.DistributedLzoIndexer /input/bigtable.lzo`
+  ```
+  hadoop jar /opt/module/hadoop-3.1.2/share/hadoop/common/hadoop-lzo-0.4.20. jar com.hadoop.compression.lzo.DistributedLzoIndexer /input/bigtable.lzo
+  ```
   4. 再次执行 WordCount 程序
-  `hadoop jar /opt/module/hadoop-3.1.2/share/hadoop/mapreduce/hadoop-mapredu ce-examples-2.7.2.jar wordcount /input /output`
+  ```
+  hadoop jar /opt/module/hadoop-3.1.2/share/hadoop/mapreduce/hadoop-mapredu ce-examples-2.7.2.jar wordcount /input /output
+  ```
 
 
 ### 4. 项目经验之 基准测试
