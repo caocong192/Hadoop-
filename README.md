@@ -92,5 +92,31 @@ hdfs diskbalancer -cancel hadoop103.plan.json
 1. 测试 HDFS 写性能
 测试内容：向 HDFS 集群写 3(CPU-1) 个 128M 的文件
   ```
-  hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-client-j obclient-3.1.3-tests.jar TestDFSIO -write -nrFiles 3 -fileSize 128MB
+  hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.1.3-tests.jar TestDFSIO -write -nrFiles 3 -fileSize 128MB
   ```
+  ```
+  2020-10-14 20:29:46,588 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+  2020-10-14 20:29:46,674 INFO fs.TestDFSIO: ----- TestDFSIO ----- : write
+  2020-10-14 20:29:46,674 INFO fs.TestDFSIO:             Date & time: Wed Oct 14 20:29:46 CST 2020
+  2020-10-14 20:29:46,674 INFO fs.TestDFSIO:         Number of files: 3
+  2020-10-14 20:29:46,674 INFO fs.TestDFSIO:  Total MBytes processed: 384
+  2020-10-14 20:29:46,674 INFO fs.TestDFSIO:       Throughput mb/sec: 37.64
+  2020-10-14 20:29:46,674 INFO fs.TestDFSIO:  Average IO rate mb/sec: 38.11
+  2020-10-14 20:29:46,674 INFO fs.TestDFSIO:   IO rate std deviation: 4.35
+  2020-10-14 20:29:46,674 INFO fs.TestDFSIO:      Test exec time sec: 51.95
+```
+2. 测试 HDFS 读性能
+测试内容：读取 HDFS 集群 3(CPU-1) 个 128M 的文件
+```
+hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.1.3-tests.jar TestDFSIO -read -nrFiles 3 -fileSize 128MB
+```
+```
+2020-10-14 20:32:48,460 INFO fs.TestDFSIO: ----- TestDFSIO ----- : read
+2020-10-14 20:32:48,461 INFO fs.TestDFSIO:             Date & time: Wed Oct 14 20:32:48 CST 2020
+2020-10-14 20:32:48,463 INFO fs.TestDFSIO:         Number of files: 3
+2020-10-14 20:32:48,463 INFO fs.TestDFSIO:  Total MBytes processed: 384
+2020-10-14 20:32:48,463 INFO fs.TestDFSIO:       Throughput mb/sec: 226.55
+2020-10-14 20:32:48,463 INFO fs.TestDFSIO:  Average IO rate mb/sec: 241.69
+2020-10-14 20:32:48,463 INFO fs.TestDFSIO:   IO rate std deviation: 62.22
+2020-10-14 20:32:48,463 INFO fs.TestDFSIO:      Test exec time sec: 41.12
+```
